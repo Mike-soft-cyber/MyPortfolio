@@ -1,0 +1,74 @@
+# .gitignore - Place this in your project root
+
+# ============================================
+# SENSITIVE FILES (NEVER COMMIT THESE!)
+# ============================================
+.env
+.env.local
+.env.production
+.env.development
+*.env
+
+# API Keys and Secrets
+config.js
+secrets.json
+
+# ============================================
+# NODE MODULES & DEPENDENCIES
+# ============================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ============================================
+# BUILD OUTPUTS
+# ============================================
+build/
+dist/
+*.log
+
+# ============================================
+# OPERATING SYSTEM FILES
+# ============================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# ============================================
+# IDE/EDITOR FILES
+# ============================================
+# VSCode
+.vscode/
+*.code-workspace
+
+# JetBrains (WebStorm, IntelliJ)
+.idea/
+*.iml
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# ============================================
+# TESTING
+# ============================================
+coverage/
+.nyc_output/
+
+# ============================================
+# MISC
+# ============================================
+.cache/
+*.swp
+*.swo
+*.bak
