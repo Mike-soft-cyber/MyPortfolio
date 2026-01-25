@@ -1,4 +1,3 @@
-// server.js - Backend Email Service
 const express = require('express');
 const nodemailer = require('nodemailer');
 const cors = require('cors');
@@ -6,24 +5,20 @@ require('dotenv').config();
 
 const app = express();
 
-// Middleware
 app.use(cors());
 app.use(express.json());
 
-// Email configuration
 const transporter = nodemailer.createTransport({
-  service: 'gmail', // or 'outlook', 'yahoo', etc.
+  service: 'gmail',
   auth: {
-    user: process.env.EMAIL_USER, // Your email
-    pass: process.env.EMAIL_PASSWORD // App-specific password
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASSWORD 
   }
 });
 
-// Contact form endpoint
 app.post('/api/contact', async (req, res) => {
   const { names, email, message } = req.body;
 
-  // Validation
   if (!names || !email || !message) {
     return res.status(400).json({ 
       success: false, 
@@ -31,11 +26,10 @@ app.post('/api/contact', async (req, res) => {
     });
   }
 
-  // Email options
   const mailOptions = {
     from: process.env.EMAIL_USER,
-    to: process.env.EMAIL_USER, // Your email to receive messages
-    replyTo: email, // User's email for easy reply
+    to: process.env.EMAIL_USER,
+    replyTo: email,
     subject: `Portfolio Contact from ${names}`,
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -54,7 +48,6 @@ app.post('/api/contact', async (req, res) => {
   };
 
   try {
-    // Send email
     await transporter.sendMail(mailOptions);
     
     res.status(200).json({ 
@@ -70,7 +63,6 @@ app.post('/api/contact', async (req, res) => {
   }
 });
 
-// Health check endpoint
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'Server is running' });
 });
