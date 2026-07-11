@@ -486,7 +486,7 @@ export default function PortFolio(){
                 </Card>
 
                 <Button asChild className="bg-[#15E81D] hover:bg-[#378740] text-black">
-                  <a href="/resume.pdf" download="Michael_Kariuki_Resume.pdf">
+                  <a href={`${import.meta.env.BASE_URL}resume.pdf`} download="Michael_Kariuki_Resume.pdf">
                     <Download className="mr-2" /> Download Resume
                   </a>
                 </Button>
