@@ -223,7 +223,7 @@ export default function PortFolio(){
                         alt={p.title}
                         width={640}
                         height={256}
-                        className="w-full h-64 object-cover transition-transform duration-500 ease-out group-hover:scale-110"
+                        className="w-full h-64 object-cover object-left transition-transform duration-500 ease-out group-hover:scale-110"
                       />
                       <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                         <Button className="bg-[#15E81D] hover:bg-[#378740] text-black">
@@ -294,7 +294,7 @@ export default function PortFolio(){
                     alt={p.title}
                     width={800}
                     height={256}
-                    className="w-full h-64 object-cover"
+                    className="w-full h-64 object-cover object-left"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0a2029] to-transparent"></div>
                   
