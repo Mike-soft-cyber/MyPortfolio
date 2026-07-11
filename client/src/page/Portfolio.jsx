@@ -14,10 +14,17 @@ import { Download } from 'lucide-react'
 import { Mail } from 'lucide-react'
 import { Linkedin } from 'lucide-react'
 import { Github } from 'lucide-react'
-import { ExternalLink, Code, FileText, CheckCircle } from 'lucide-react'
-import { motion } from "framer-motion";
+import { ExternalLink, Code, FileText, CheckCircle, Menu, X } from 'lucide-react'
+import { motion, AnimatePresence } from "framer-motion";
+import { useState } from 'react'
 
 export default function PortFolio(){
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const scrollToSection = (id) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setMobileMenuOpen(false);
+  };
 
   const projects = [
     // Temporarily removed — DBSL project still in progress. Uncomment when ready.
@@ -125,49 +132,52 @@ export default function PortFolio(){
         .font-mono-label { font-family: 'JetBrains Mono', monospace; }
       `}</style>
       {/* Navigation */}
-      <nav className="flex items-center justify-between p-6">
+      <nav className="relative flex items-center justify-between p-6">
         <div className="flex items-center gap-2">
-          <h1 className="font-display text-2xl font-bold tracking-tight">MICHAEL KARIUKI WACHIRA</h1>
+          <h1 className="font-display text-lg md:text-2xl font-bold tracking-tight">MICHAEL KARIUKI WACHIRA</h1>
         </div>
-        <div>
+
+        {/* Desktop nav */}
+        <div className="hidden md:block">
           <ul className="flex gap-6 font-mono-label text-sm tracking-wide">
-            <li><a href="#home" className="hover:text-[#15E81D] transition font-medium" onClick={(e) => {
-                  e.preventDefault();
-                  document.getElementById('home')?.scrollIntoView({ 
-                    behavior: 'smooth',
-                    block: 'start'
-                  });
-                }}>Home</a></li>
-            <li><a href="#projects" className="hover:text-[#15E81D] transition font-medium" onClick={(e) => {
-                  e.preventDefault();
-                  document.getElementById('projects')?.scrollIntoView({ 
-                    behavior: 'smooth',
-                    block: 'start'
-                  });
-                }}>Projects</a></li>
-            <li><a href="#skills" className="hover:text-[#15E81D] transition font-medium" onClick={(e) => {
-                  e.preventDefault();
-                  document.getElementById('skills')?.scrollIntoView({ 
-                    behavior: 'smooth',
-                    block: 'start'
-                  });
-                }}>Skills</a></li>
-            <li><a href="#about" className="hover:text-[#15E81D] transition font-medium" onClick={(e) => {
-                  e.preventDefault();
-                  document.getElementById('about')?.scrollIntoView({ 
-                    behavior: 'smooth',
-                    block: 'start'
-                  });
-                }}>About</a></li>
-            <li><a href="#contact" className="hover:text-[#15E81D] transition font-medium" onClick={(e) => {
-                  e.preventDefault();
-                  document.getElementById('contact')?.scrollIntoView({ 
-                    behavior: 'smooth',
-                    block: 'start'
-                  });
-                }}>Contact</a></li>
+            <li><a href="#home" className="hover:text-[#15E81D] transition font-medium" onClick={(e) => { e.preventDefault(); scrollToSection('home'); }}>Home</a></li>
+            <li><a href="#projects" className="hover:text-[#15E81D] transition font-medium" onClick={(e) => { e.preventDefault(); scrollToSection('projects'); }}>Projects</a></li>
+            <li><a href="#skills" className="hover:text-[#15E81D] transition font-medium" onClick={(e) => { e.preventDefault(); scrollToSection('skills'); }}>Skills</a></li>
+            <li><a href="#about" className="hover:text-[#15E81D] transition font-medium" onClick={(e) => { e.preventDefault(); scrollToSection('about'); }}>About</a></li>
+            <li><a href="#contact" className="hover:text-[#15E81D] transition font-medium" onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }}>Contact</a></li>
           </ul>
         </div>
+
+        {/* Mobile hamburger button */}
+        <button
+          className="md:hidden text-white p-2 flex-shrink-0"
+          aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={mobileMenuOpen}
+          onClick={() => setMobileMenuOpen((prev) => !prev)}
+        >
+          {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+        </button>
+
+        {/* Mobile dropdown menu */}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.2 }}
+              className="md:hidden absolute top-full left-0 right-0 bg-[#08262E] border-t border-gray-700 z-50"
+            >
+              <ul className="flex flex-col font-mono-label text-sm tracking-wide">
+                <li><a href="#home" className="block px-6 py-4 hover:text-[#15E81D] hover:bg-[#0f3743] transition font-medium" onClick={(e) => { e.preventDefault(); scrollToSection('home'); }}>Home</a></li>
+                <li><a href="#projects" className="block px-6 py-4 hover:text-[#15E81D] hover:bg-[#0f3743] transition font-medium" onClick={(e) => { e.preventDefault(); scrollToSection('projects'); }}>Projects</a></li>
+                <li><a href="#skills" className="block px-6 py-4 hover:text-[#15E81D] hover:bg-[#0f3743] transition font-medium" onClick={(e) => { e.preventDefault(); scrollToSection('skills'); }}>Skills</a></li>
+                <li><a href="#about" className="block px-6 py-4 hover:text-[#15E81D] hover:bg-[#0f3743] transition font-medium" onClick={(e) => { e.preventDefault(); scrollToSection('about'); }}>About</a></li>
+                <li><a href="#contact" className="block px-6 py-4 hover:text-[#15E81D] hover:bg-[#0f3743] transition font-medium" onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }}>Contact</a></li>
+              </ul>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </nav>
 
       {/* Hero Section */}
