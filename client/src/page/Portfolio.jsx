@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogFooter, DialogTrigger, DialogTitle, DialogDescription } from '@/components/ui/dialog'
 import { Badge } from '@/components/ui/badge'
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/card'
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 // import dbsl from '@/photo/dbsl.png' // temporarily unused — DBSL project commented out below
 import moran from '@/photo/moran.png'
 import kcggra from '@/photo/kcggra.png'
@@ -485,16 +485,7 @@ export default function PortFolio(){
                 </p>
               </motion.div>
 
-              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 pt-4">
-                <Card className="w-fit bg-[#0f3743] border-gray-700">
-                  <CardContent className="p-6">
-                    <p className="text-4xl font-bold text-center text-[#15E81D]">{projects.length}</p>
-                  </CardContent>
-                  <CardFooter className="justify-center border-t border-gray-700 px-6 py-3">
-                    <p className="text-sm text-gray-400">Projects Completed</p>
-                  </CardFooter>
-                </Card>
-
+              <div className="pt-4">
                 <Button asChild className="bg-[#15E81D] hover:bg-[#378740] text-black">
                   <a href={`${import.meta.env.BASE_URL}resume.pdf`} download="Michael_Kariuki_Resume.pdf">
                     <Download className="mr-2" /> Download Resume
