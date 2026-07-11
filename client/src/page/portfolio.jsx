@@ -1,7 +1,5 @@
 import { Button } from '@/components/ui/button'
-import { Dialog, DialogContent, DialogFooter, DialogTrigger } from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
+import { Dialog, DialogContent, DialogFooter, DialogTrigger, DialogTitle, DialogDescription } from '@/components/ui/dialog'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/card'
 // import dbsl from '@/photo/dbsl.png' // temporarily unused — DBSL project commented out below
@@ -16,65 +14,10 @@ import { Download } from 'lucide-react'
 import { Mail } from 'lucide-react'
 import { Linkedin } from 'lucide-react'
 import { Github } from 'lucide-react'
-import { useState } from 'react'
-import { Label } from '@/components/ui/label'
-import { Send, Loader2 } from 'lucide-react'
 import { ExternalLink, Code, FileText, CheckCircle } from 'lucide-react'
 import { motion } from "framer-motion";
 
 export default function PortFolio(){
-  const [formField, setFormField] = useState({
-    names: '',
-    email: '',
-    message: ''
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null);
-
-  const handleInputChange = (e) => {
-    const {name, value} = e.target;
-    setFormField(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setSubmitStatus(null);
-    
-    try {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-      const response = await fetch(`${apiUrl}/api/contact`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formField)
-      });
-      
-      const data = await response.json();
-      
-      if (data.success) {
-        setSubmitStatus('success');
-        setFormField({
-          names: '',
-          email: '',
-          message: ''
-        });
-        
-        setTimeout(() => setSubmitStatus(null), 5000);
-      } else {
-        setSubmitStatus('error');
-      }
-    } catch (error) {
-      console.error('Error sending message:', error);
-      setSubmitStatus('error');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
 
   const projects = [
     // Temporarily removed — DBSL project still in progress. Uncomment when ready.
@@ -108,7 +51,7 @@ export default function PortFolio(){
     },
     {
       id: 3,
-      title: "KCGGRA Residential Association Community Platform",
+      title: "KCGGRA",
       shortDesc: "A unified community platform for security, subscriptions, and civic engagement, built for a Nairobi neighborhood association.",
       longDesc: "KCGGRA is a digital neighborhood headquarters for a residents' association in Nairobi. It replaces scattered phone calls, cash collections, and word-of-mouth reporting with a single portal: a panic button that alerts guards and neighbors at once, QR visitor passes so residents no longer have to call the gate, M-Pesa-based subscription payments with a live fundraising tracker, street-level community groups, USSD access for residents without smartphones, and automatic alerts when Nairobi County posts zoning or public participation notices that affect the area.",
       stack: ["MongoDB", "Express", "React", "Node.js", "CSS"],
@@ -349,8 +292,12 @@ export default function PortFolio(){
                     <Badge className="bg-[#15E81D] text-black font-mono-label text-xs tracking-wide mb-2">
                       {p.category}
                     </Badge>
-                    <h1 className="font-display text-3xl font-bold tracking-tight text-white">{p.title}</h1>
-                    <p className="font-body text-gray-300 mt-2">{p.shortDesc}</p>
+                    <DialogTitle asChild>
+                      <h1 className="font-display text-3xl font-bold tracking-tight text-white">{p.title}</h1>
+                    </DialogTitle>
+                    <DialogDescription asChild>
+                      <p className="font-body text-gray-300 mt-2">{p.shortDesc}</p>
+                    </DialogDescription>
                   </div>
                 </div>
                 
@@ -552,116 +499,32 @@ export default function PortFolio(){
       {/* Contact Section */}
       <section id="contact" className="px-6 py-16 bg-[#020C0F]">
         <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <div>
-              <h2 className="font-mono-label text-sm uppercase tracking-wider text-gray-400 mb-2">CONTACT</h2>
-              <h1 className="font-display text-3xl font-bold tracking-tight mb-4 text-white">Let's Build Something Great</h1>
-              <p className="font-body text-gray-300 mb-8 max-w-lg">
-                I'm currently looking for new opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you!
-              </p>
+          <div className="max-w-2xl">
+            <h2 className="font-mono-label text-sm uppercase tracking-wider text-gray-400 mb-2">CONTACT</h2>
+            <h1 className="font-display text-3xl font-bold tracking-tight mb-4 text-white">Let's Build Something Great</h1>
+            <p className="font-body text-gray-300 mb-8 max-w-lg">
+              I'm currently looking for new opportunities. Whether you have a question or just want to say hi, reach out directly below — I'll get back to you as soon as I can!
+            </p>
 
-              <div className="space-y-6">
-                {contacts.map(c => (
-                  <div key={c.id} className="flex items-center gap-4 group">
-                    <div className="p-3 bg-[#15E81D]/20 rounded-full group-hover:bg-[#15E81D]/30 transition-colors">
-                      <div className="text-[#15E81D]">{c.icon}</div>
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-white">{c.site}</h3>
-                      <a 
-                        href={c.link} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="text-gray-400 hover:text-[#15E81D] transition-colors"
-                      >
-                        {c.place}
-                      </a>
-                    </div>
+            <div className="space-y-6">
+              {contacts.map(c => (
+                <div key={c.id} className="flex items-center gap-4 group">
+                  <div className="p-3 bg-[#15E81D]/20 rounded-full group-hover:bg-[#15E81D]/30 transition-colors">
+                    <div className="text-[#15E81D]">{c.icon}</div>
                   </div>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <Card className="bg-[#08262E] border-gray-700">
-                <CardContent className="p-6">
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="names" className="font-body text-gray-300">Name</Label>
-                        <Input
-                          id="names"
-                          name="names"
-                          type="text"
-                          value={formField.names}
-                          onChange={handleInputChange}
-                          required
-                          disabled={isSubmitting}
-                          className="bg-[#0f3743] border-gray-600 text-white focus:border-[#15E81D]"
-                          placeholder="Enter full name"
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="email" className="font-body text-gray-300">Email</Label>
-                        <Input
-                          id="email"
-                          name="email"
-                          type="email"
-                          value={formField.email}
-                          onChange={handleInputChange}
-                          required
-                          disabled={isSubmitting}
-                          className="bg-[#0f3743] border-gray-600 text-white focus:border-[#15E81D]"
-                          placeholder="Enter email"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="message" className="font-body text-gray-300">Message</Label>
-                      <Textarea
-                        id="message"
-                        name="message"
-                        rows={7}
-                        value={formField.message}
-                        onChange={handleInputChange}
-                        required
-                        disabled={isSubmitting}
-                        placeholder="Tell me about your project…"
-                        className="bg-[#0f3743] border-gray-600 text-white focus:border-[#15E81D]"
-                      />
-                    </div>
-
-                    {submitStatus === 'success' && (
-                      <div className="bg-[#15E81D]/20 border border-[#15E81D] text-[#15E81D] px-4 py-3 rounded">
-                        ✓ Message sent successfully! I'll get back to you soon.
-                      </div>
-                    )}
-
-                    {submitStatus === 'error' && (
-                      <div className="bg-red-500/20 border border-red-500 text-red-400 px-4 py-3 rounded">
-                        ✗ Failed to send message. Please try again or email me directly.
-                      </div>
-                    )}
-
-                    <Button 
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="w-full bg-[#15E81D] hover:bg-[#378740] text-black disabled:opacity-50 disabled:cursor-not-allowed"
+                  <div>
+                    <h3 className="font-semibold text-white">{c.site}</h3>
+                    <a 
+                      href={c.link} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-gray-400 hover:text-[#15E81D] transition-colors"
                     >
-                      {isSubmitting ? (
-                        <>
-                          <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Sending…
-                        </>
-                      ) : (
-                        <>
-                          <Send className="mr-2" /> Send Message
-                        </>
-                      )}
-                    </Button>
-                  </form>
-                </CardContent>
-              </Card>
+                      {c.place}
+                    </a>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
